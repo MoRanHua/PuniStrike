@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+  <top_skillball>7.064338</top_skillball>
+  <bottom_skillball>7.283793</bottom_skillball>
+  <top_skillball>7.781725</top_skillball>
+  <bottom_skillball>7.902313</bottom_skillball>
+  <top_skillball>8.15934</top_skillball>
+  <bottom_skillball>8.495255</bottom_skillball>
+  <top_skillball>8.933416</top_skillball>
+  <bottom_skillball>9.077644</bottom_skillball>
+  <top_skillball>9.323458</top_skillball>
+  <bottom_skillball>9.617298</bottom_skillball>
+  <top_skillball>10.01638</top_skillball>
+  <bottom_skillball>10.17048</bottom_skillball>
+  <top_skillball>10.38711</top_skillball>
+  <bottom_skillball>10.67443</bottom_skillball>
+  <bottom_skillball>10.94609</bottom_skillball>
+  <bottom_skillball>11.2481</bottom_skillball>
+  <top_skillball>11.48967</top_skillball>
+  <bottom_skillball>11.79044</bottom_skillball>
+  <bottom_skillball>11.90683</bottom_skillball>
+  <top_skillball>12.18822</top_skillball>
+  <bottom_skillball>12.30669</bottom_skillball>
+  <top_skillball>12.57615</top_skillball>
+  <bottom_skillball>12.81831</bottom_skillball>
+  <top_xue_qing start_hold_time="8.672662" holding_time="1.024056" />
+  <top_xue_qing start_hold_time="10.11166" holding_time="0.2555064" />
+  <top_xue_qing start_hold_time="13.36353" holding_time="0.4242425" />
+  <buttom_xue_qing start_hold_time="0" holding_time="0.8743692" />
+  <top_xue_qing start_hold_time="14.99264" holding_time="1.355231" />
+  <buttom_xue_qing start_hold_time="0" holding_time="2.543866" />
+  <top_xue_qing start_hold_time="19.45086" holding_time="0.6166429" />
+</Root>
