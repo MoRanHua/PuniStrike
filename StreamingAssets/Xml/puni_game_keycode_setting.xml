@@ -6,7 +6,7 @@
   <keycode_control_to_down_1>j</keycode_control_to_down_1>
   <keycode_control_to_down_2>k</keycode_control_to_down_2>
   <keycode_control_to_down_3>l</keycode_control_to_down_3>
-  <keycode_control_to_place_obstacle>i</keycode_control_to_place_obstacle>
+  <keycode_control_to_place_obstacle>o</keycode_control_to_place_obstacle>
   <keycode_control_to_build_top_xue_qing>c</keycode_control_to_build_top_xue_qing>
   <keycode_control_to_build_bottom_xue_qing>m</keycode_control_to_build_bottom_xue_qing>
 </Root>
