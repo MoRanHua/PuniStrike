@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Settings>
+	<Volume>
+		<Vol>85</Vol>
+		<Vol>80</Vol>
+		<Vol>62</Vol>
+		<IsMute>0</IsMute>
+	</Volume>
+	<JudgeOffset>0</JudgeOffset>
+	<KeyCode>
+		<up>a</up>
+		<up>s</up>
+		<up>d</up>
+		<up>f</up>
+		<down>h</down>
+		<down>j</down>
+		<down>k</down>
+		<down>l</down>
+		<BulletTime>space</BulletTime>
+		<IsManualBulletTime>0</IsManualBulletTime>
+	</KeyCode>
+	<OperationMode>0</OperationMode>
+	<judge_offset>0</judge_offset>
+</Settings>

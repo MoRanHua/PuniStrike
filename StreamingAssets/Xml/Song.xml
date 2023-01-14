@@ -3,19 +3,19 @@
   <Member name="露西亚" eName="Lucia">
     <Song name="Hikari" isLock="0" id="0">
       <Difficulty>1</Difficulty>
-      <EasyRecord>2119</EasyRecord>
+      <EasyRecord>1923</EasyRecord>
       <NormalRecord>0</NormalRecord>
       <HardRecord>0</HardRecord>
-      <EasyRate>98.66071</EasyRate>
+      <EasyRate>98.78</EasyRate>
       <NormalRate>0</NormalRate>
       <HardRate>0</HardRate>
       <Evaluate>0</Evaluate>
-      <EasyCombo>218</EasyCombo>
-      <EasyPerfect>221</EasyPerfect>
-      <EasyGreat>0</EasyGreat>
-      <EasyPass>1</EasyPass>
-      <EasyMiss>2</EasyMiss>
-      <EasyClass>S</EasyClass>
+      <EasyCombo>233</EasyCombo>
+      <EasyPerfect>200</EasyPerfect>
+      <EasyGreat>13</EasyGreat>
+      <EasyPass>10</EasyPass>
+      <EasyMiss>0</EasyMiss>
+      <EasyClass>s</EasyClass>
       <NormalClass>D</NormalClass>
       <HardClass>D</HardClass>
       <NormalCombo>0</NormalCombo>
@@ -87,19 +87,19 @@
     </Song>
     <Song name="Hikari3" isLock="1" id="3">
       <Difficulty>1</Difficulty>
-      <EasyRecord>2122</EasyRecord>
+      <EasyRecord>0</EasyRecord>
       <NormalRecord>0</NormalRecord>
       <HardRecord>0</HardRecord>
-      <EasyRate>98.22222</EasyRate>
+      <EasyRate>0</EasyRate>
       <NormalRate>0</NormalRate>
       <HardRate>0</HardRate>
       <Evaluate>0</Evaluate>
-      <EasyCombo>128</EasyCombo>
-      <EasyPerfect>221</EasyPerfect>
+      <EasyCombo>0</EasyCombo>
+      <EasyPerfect>0</EasyPerfect>
       <EasyGreat>0</EasyGreat>
-      <EasyPass>1</EasyPass>
-      <EasyMiss>3</EasyMiss>
-      <EasyClass>S</EasyClass>
+      <EasyPass>0</EasyPass>
+      <EasyMiss>0</EasyMiss>
+      <EasyClass>D</EasyClass>
       <NormalClass>D</NormalClass>
       <HardClass>D</HardClass>
       <NormalCombo>0</NormalCombo>
