@@ -27,8 +27,8 @@
     
     <div id="player_container">
         <img id="Background" src="img/bg.png" width="204" height="118">
-        <img id="right_hand_up" src="img/rightup.png" width="204" height="118">
-        <img id="left_hand_up" src="img/leftup.png" width="204" height="118">
+            <img id="right_hand_up" src="img/rightup.png" width="204" height="118">
+            <img id="left_hand_up" src="img/leftup.png" width="204" height="118">
         <canvas id="right_hand_down" width="204" height="118"></canvas>
         <canvas id="left_hand_down" width="204" height="118"></canvas>
     </div>
@@ -228,7 +228,7 @@
             left_hand_down_context.fillStyle = "white";
             left_hand_down_context.lineCap = "round";
             left_hand_down_context.beginPath();
-            left_hand_down_context.moveTo(360, 200);
+            left_hand_down_context.moveTo(0.85 * right_hand_down_context.canvas.width, 0.85 * right_hand_down_context.canvas.height);
             left_hand_down_context.bezierCurveTo(curve[0], curve[1], curve[2], curve[3], curve[4], curve[5]);
 
             left_hand_down_context.fill();
@@ -250,7 +250,7 @@
             right_hand_down_context.fillStyle = "white";
             right_hand_down_context.lineCap = "round";
             right_hand_down_context.beginPath();
-            right_hand_down_context.moveTo(360, 200);
+            right_hand_down_context.moveTo(0.85 * right_hand_down_context.canvas.width, 0.85 * right_hand_down_context.canvas.height);
             right_hand_down_context.bezierCurveTo(curve[0], curve[1], curve[2], curve[3], curve[4], curve[5]);
 
             right_hand_down_context.fill();
@@ -259,7 +259,6 @@
 
         addEventListener("keydown", function (event) {
             console.log(event.keyCode);
-            console.log(pawCurvesButtons.length)
             current_left_hand_curve = pawCurvesButtons[Math.ceil(5*Math.random())];
             console.log(current_left_hand_curve);
             if (event.keyCode == 65) { draw_left_hand_down(current_left_hand_curve) }
