@@ -334,6 +334,8 @@
 
         readConfig();
 
+        get_keycode();
+
         window.addEventListener("gamepadconnected", function(e) {
         connected = window.navigator.getGamepads()[e.gamepad.index];
         console.log("Gamepad " + e.gamepad.index + " connected");
@@ -386,25 +388,26 @@
         //if(!connected) {
         //return;
             //}//未连接手柄就退出（？）
-        var gamepads = window.navigator.getGamepads();
-        if(gamepadIdx >= gamepads.length) {
-        return;
-        }
+        //var gamepads = window.navigator.getGamepads();
+        //if(gamepadIdx >= gamepads.length) {
+        //return;
+        //}
 
-        var axes = [];
-        //Converting axes to buttons
-        for(var i = 0; i < gamepads[gamepadIdx].axes.length; i++) {
-        var val = gamepads[gamepadIdx].axes[i];
-        axes.push({
-        pressed: val > axeActiveThreshold ? true : false
-        });
-        axes.push({
-        pressed: val < -axeActiveThreshold ? true : false
-        });
-        };
+        //var axes = [];
+        ////Converting axes to buttons
+        //for(var i = 0; i < gamepads[gamepadIdx].axes.length; i++) {
+        //var val = gamepads[gamepadIdx].axes[i];
+        //axes.push({
+        //pressed: val > axeActiveThreshold ? true : false
+        //});
+        //axes.push({
+        //pressed: val < -axeActiveThreshold ? true : false
+        //});
+        //};
 
-        var newButtons = gamepads[gamepadIdx].buttons.concat(axes);
-
+        //var newButtons = gamepads[gamepadIdx].buttons.concat(axes);
+        var newButtons = keycode;
+           
         //Has to compare buttons and newButtons to see what changed
         selectAP2SState(newButtons);
 
