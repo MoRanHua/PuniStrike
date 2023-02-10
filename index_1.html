@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | empty_project</title>
+
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+
+    <style type="text/css">
+        body {
+            background: rgba(0,0,0,0);
+            margin: 0;
+            padding: 0;
+        }
+
+            body > div * {
+                position: absolute;
+            }
+
+        #AP2S, #Smoke {
+            z-index: 1500;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        #Button1, #Button2, #Button3, #Button4, #Button5, #Button6 {
+            display: none;
+        }
+
+        #RightPawDown {
+            z-index: 1000;
+        }
+
+        #LeftPawDown, #LeftPawUp {
+            z-index: 2000;
+        }
+
+        #StickUp, #StickUpRight, #StickRight,
+        #StickDownRight, #StickDown, #StickDownLeft,
+        #StickLeft, #StickUpLeft {
+            display: none;
+        }
+
+        #Container {
+            /*
+            border: 8px solid;
+            border-top: none;
+            border-radius: 50px;
+            */
+            position: absolute;
+            /*
+            width: 612px;
+            height: 354px;
+            left: 5px;
+            top: 5px;
+            */
+            width: 306px;
+            height: 177px;
+            left: 1800px;
+            top: 900px;
+            overflow: hidden;
+        }
+        /*
+        #Mask1 {
+            display: none;
+            z-index: 1000;
+            background: #0F0;
+            position: absolute;
+            width: 118px;
+            left: -10px;
+            height: 160px;
+            transform: rotate(8deg);
+        }
+
+        #Mask2 {
+            display: none;
+            z-index: 1000;
+            background: #0F0;
+            position: absolute;
+            width: 119px;
+            left: 561px;
+            height: 260px;
+            transform: rotate(11deg);
+        }
+        */
+    </style>
+</head>
+<body>
+    <div id="unity-container" class="unity-desktop">
+        <canvas id="unity-canvas" width=960 height=600></canvas>
+        <div id="unity-loading-bar">
+            <div id="unity-logo"></div>
+            <div id="unity-progress-bar-empty">
+                <div id="unity-progress-bar-full"></div>
+            </div>
+        </div>
+        <div id="unity-warning"> </div>
+        <div id="unity-footer">
+            <div id="unity-webgl-logo"></div>
+            <div id="unity-fullscreen-button"></div>
+            <div id="unity-build-title">empty_project</div>
+        </div>
+    </div>
+
+    <div id="Container">
+        <img id="Smoke" src="img/smoke.png"></img>
+        <img id="AP2S" src="img/ap2s.png"></img>
+        <img id="Background" src="img/bg.png"></img>
+        <img id="RightPawUp" src="img/rightup.png"></img>
+        <img id="LeftPawUp" src="img/leftup.png"></img>
+        <canvas id="RightPawDown" width="612" height="354"></canvas>
+        <canvas id="LeftPawDown" width="612" height="354"></canvas>
+        <img src="img/base.png"></img>
+        <img src="img/buttons.png"></img>
+
+        <img id="Button1" src="img/b1.png"></img>
+        <img id="Button2" src="img/b2.png"></img>
+        <img id="Button3" src="img/b3.png"></img>
+        <img id="Button4" src="img/b4.png"></img>
+        <img id="Button5" src="img/b5.png"></img>
+        <img id="Button6" src="img/b6.png"></img>
+
+        <img id="StickNeutral" src="img/stick1.png"></img>
+        <img id="StickUp" src="img/stick2.png"></img>
+        <img id="StickUpRight" src="img/stick3.png"></img>
+        <img id="StickRight" src="img/stick4.png"></img>
+        <img id="StickDownRight" src="img/stick5.png"></img>
+        <img id="StickDown" src="img/stick6.png"></img>
+        <img id="StickDownLeft" src="img/stick7.png"></img>
+        <img id="StickLeft" src="img/stick8.png"></img>
+        <img id="StickUpLeft" src="img/stick9.png"></img>
+    </div>
+
+
+    <script>
+        var container = document.querySelector("#unity-container");
+        var canvas = document.querySelector("#unity-canvas");
+        var loadingBar = document.querySelector("#unity-loading-bar");
+        var progressBarFull = document.querySelector("#unity-progress-bar-full");
+        var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+        var warningBanner = document.querySelector("#unity-warning");
+
+        // Shows a temporary message banner/ribbon for a few seconds, or
+        // a permanent error message on top of the canvas if type=='error'.
+        // If type=='warning', a yellow highlight color is used.
+        // Modify or remove this function to customize the visually presented
+        // way that non-critical warnings and error messages are presented to the
+        // user.
+        function unityShowBanner(msg, type) {
+            function updateBannerVisibility() {
+                warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+            }
+            var div = document.createElement('div');
+            div.innerHTML = msg;
+            warningBanner.appendChild(div);
+            if (type == 'error') div.style = 'background: red; padding: 10px;';
+            else {
+                if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+                setTimeout(function () {
+                    warningBanner.removeChild(div);
+                    updateBannerVisibility();
+                }, 5000);
+            }
+            updateBannerVisibility();
+        }
+
+        var buildUrl = "Build";
+        var loaderUrl = buildUrl + "/PuniStrike.loader.js";
+        var config = {
+            dataUrl: buildUrl + "/PuniStrike.data",
+            frameworkUrl: buildUrl + "/PuniStrike.framework.js",
+            codeUrl: buildUrl + "/PuniStrike.wasm",
+            streamingAssetsUrl: "StreamingAssets",
+            companyName: "DefaultCompany",
+            productName: "empty_project",
+            productVersion: "0.1",
+            showBanner: unityShowBanner,
+        };
+
+        // By default Unity keeps WebGL canvas render target size matched with
+        // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+        // Set this to false if you want to decouple this synchronization from
+        // happening inside the engine, and you would instead like to size up
+        // the canvas DOM size and WebGL render target sizes yourself.
+        // config.matchWebGLToCanvasSize = false;
+
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            // Mobile device style: fill the whole browser client area with the game canvas:
+
+            var meta = document.createElement('meta');
+            meta.name = 'viewport';
+            meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+            document.getElementsByTagName('head')[0].appendChild(meta);
+            container.className = "unity-mobile";
+
+            // To lower canvas resolution on mobile devices to gain some
+            // performance, uncomment the following line:
+            // config.devicePixelRatio = 1;
+
+            canvas.style.width = window.innerWidth + 'px';
+            canvas.style.height = window.innerHeight + 'px';
+
+            unityShowBanner('WebGL builds are not supported on mobile devices.');
+        } else {
+            // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
+
+            canvas.style.width = "960px";
+            canvas.style.height = "600px";
+        }
+
+        loadingBar.style.display = "block";
+
+        var script = document.createElement("script");
+        script.src = loaderUrl;
+        script.onload = () => {
+            createUnityInstance(canvas, config, (progress) => {
+                progressBarFull.style.width = 100 * progress + "%";
+            }).then((unityInstance) => {
+                loadingBar.style.display = "none";
+                fullscreenButton.onclick = () => {
+                    unityInstance.SetFullscreen(1);
+                };
+            }).catch((message) => {
+                alert(message);
+            });
+        };
+        document.body.appendChild(script);
+    </script>
+    
+    <script>
+        //indices for stick directions in internal data
+        const STICK_NEUTRAL = 0;
+        const STICK_UP = 1;
+        const STICK_DOWN = 2;
+        const STICK_LEFT = 3;
+        const STICK_RIGHT = 4;
+        const STICK_UP_LEFT = 5;
+        const STICK_UP_RIGHT = 6;
+        const STICK_DOWN_LEFT = 7;
+        const STICK_DOWN_RIGHT = 8;
+
+        //Right/Left/Up/Down are from bongocat's viewpoint!
+        var rpu = document.getElementById("RightPawUp");
+        var lpu = document.getElementById("LeftPawUp");
+        var rpd = document.getElementById("RightPawDown");
+        var lpd = document.getElementById("LeftPawDown");
+
+        //Canvas things
+        var rpdctx = rpd.getContext("2d");
+        var lpdctx = lpd.getContext("2d");
+
+        //Stick
+        var StickElements = [
+        document.getElementById("StickNeutral"),
+        document.getElementById("StickUp"),
+        document.getElementById("StickDown"),
+        document.getElementById("StickLeft"),
+        document.getElementById("StickRight"),
+        document.getElementById("StickUpLeft"),
+        document.getElementById("StickUpRight"),
+        document.getElementById("StickDownLeft"),
+        document.getElementById("StickDownRight"),
+        ];
+
+        //Buttons
+        var ButtonElements = [
+        document.getElementById("Button1"),
+        document.getElementById("Button2"),
+        document.getElementById("Button3"),
+        document.getElementById("Button4"),
+        document.getElementById("Button5"),
+        document.getElementById("Button6"),
+        ];
+
+        //Extra
+        var Smoke = document.getElementById("Smoke");
+        var SmokeTimeout = 2000;
+        var SmokeTimer = null;
+        var AP2S = document.getElementById("AP2S");
+        var currentAP2S = [];
+        var AP2SThreshold = 15;
+        var AP2STimer = null;
+        var AP2STimeout = 300; //Minimum shown for
+
+        //Gamepads
+        var connected = null;
+        var buttons = null;
+        var direction = STICK_NEUTRAL;
+
+        var gamepadIdx = 0;
+        var upButtonIdx = 12;
+        var downButtonIdx = 13;
+        var leftButtonIdx = 14;
+        var rightButtonIdx = 15;
+        var buttonIdx = [2, 3, 5, 0, 1, 7];
+        var smokeButtonIdx = 4;
+
+        var axeActiveThreshold = 0.4;
+
+        //Right hand for the buttons
+        //(from bongocat's perspective, the buttons go
+        //from left to right, first top then bottom row)
+        var pawCurvesButtons = [
+        [110,190, 290,370, 220,160],
+        [110,190, 160,350, 220,160],
+        [ 90,190,  40,320, 220,160],
+
+        [110,190, 310,310, 220,160],
+        [110,190, 180,290, 220,160],
+        [ 90,190,  50,260, 220,160],
+        ];
+
+        //Left hand for the stick
+        var pawCurvesStick = [
+        [290,240, 390,280, 465,200], // neutral
+        [290,260, 370,300, 465,200], // up
+        [300,260, 390,270, 465,200], // down
+        [360,250, 390,290, 465,200], // left
+        [250,230, 350,290, 465,200], // right
+        [310,260, 390,290, 465,200], // up left
+        [275,245, 350,290, 465,200], // up right
+        [320,260, 410,270, 465,200], // down left
+        [270,240, 390,280, 465,200], // down right
+        ];
+
+        var RPSpeed = 0.7;
+        var RPReleaseTimeout = 0;
+        var RPReleaseTimer = null;
+        var currentRPCurve = null;
+        var currentRPCurveTarget = null;
+
+        var LPSpeed = 0.7;
+        var LPReleaseTimeout = 2000;
+        var LPReleaseTimer = null;
+        var currentLPCurve = null;
+        var currentLPCurveTarget = null;
+
+        readConfig();
+
+        get_keycode(event);
+
+        window.addEventListener("gamepadconnected", function(e) {
+        connected = window.navigator.getGamepads()[e.gamepad.index];
+        console.log("Gamepad " + e.gamepad.index + " connected");
+        requestAnimationFrame(pollGamepadButtons);
+        });
+
+        //Gamepad index can be configured in url with "gamepad=idx"
+        //Buttons can be configured in url with comma-separated indices,
+        //"buttons=u,d,l,r,1,2,3,4,5,6,smoke"
+        function readConfig() {
+        var config = window.location.search;
+        var gamepadMatch = config.match(/[?&]gamepad=(\d+)/);
+        var buttonsMatch = config.match(/[?&]buttons=([\d,]+)/);
+        var deadzoneMatch = config.match(/[?&]deadzone=([\d\.]+)/);
+        var ap2sMatch = config.match(/[?&]ap2s=([\d]+)/);
+        if(gamepadMatch) {
+        gamepadIdx = Number.parseInt(gamepadMatch[1]);
+        }
+        if(buttonsMatch) {
+        var buttonStrings = buttonsMatch[1].split(",");
+        if(buttonStrings.length == 11) {
+        upButtonIdx = Number.parseInt(buttonStrings[0], 10);
+        downButtonIdx = Number.parseInt(buttonStrings[1], 10);
+        leftButtonIdx = Number.parseInt(buttonStrings[2], 10);
+        rightButtonIdx = Number.parseInt(buttonStrings[3], 10);
+        for(var i = 0; i < buttonIdx.length; i++) {
+        buttonIdx[i] = Number.parseInt(buttonStrings[i + 4], 10);
+        }
+        smokeButtonIdx = Number.parseInt(buttonStrings[10], 10);
+        }
+        }
+        if(deadzoneMatch) {
+        axeActiveThreshold = Number.parseFloat(deadzoneMatch[1]);
+        }
+        if(ap2sMatch) {
+        AP2SThreshold = Number.parseInt(ap2sMatch[1]);
+        }
+        }
+
+        //获取键盘输入
+        function get_keycode(event) {
+            var keycode = event.Keycode || event.which;
+            config.log(keycode);
+        }
+        //
+        function pollGamepadButtons() {
+        requestAnimationFrame(pollGamepadButtons);
+        var keycode = event.Keycode || event.which;
+        config.log(keycode);
+        //if(!connected) {
+        //return;
+            //}
+        //var gamepads = window.navigator.getGamepads();
+        //if(gamepadIdx >= gamepads.length) {
+        //return;
+        //}
+
+        //var axes = [];
+        ////Converting axes to buttons
+        //for(var i = 0; i < gamepads[gamepadIdx].axes.length; i++) {
+        //var val = gamepads[gamepadIdx].axes[i];
+        //axes.push({
+        //pressed: val > axeActiveThreshold ? true : false
+        //});
+        //axes.push({
+        //pressed: val < -axeActiveThreshold ? true : false
+        //});
+        //};
+
+        //var newButtons = gamepads[gamepadIdx].buttons.concat(axes);
+        var newButtons = keycode;
+           
+        //Has to compare buttons and newButtons to see what changed
+        selectAP2SState(newButtons);
+
+        buttons = newButtons;
+
+        //Logging debug data to console
+        var btnStr = "";
+        for(var i = 0; i < buttons.length; i++) {
+        if(buttons[i].pressed) {
+        btnStr += i + ": pressed\t";
+        }
+        }
+        btnStr = "AP2S: " + currentAP2S.length + " \t" + btnStr;
+        console.log(btnStr);
+
+        direction = getStickDirection();
+
+        selectStickState();
+        selectButtonsState();
+        selectSmokeState();
+        selectRPTarget();
+        selectLPTarget();
+
+        adjustRPCurve();
+        adjustLPCurve();
+
+        drawRPD(currentRPCurve);
+        drawLPD(currentLPCurve);
+        }
+
+        function selectAP2SState(newButtons) {
+        if(!buttons) {
+        return 0;
+        }
+
+        var currentTime = Date.now();
+
+        //Filter out expired actions
+        currentAP2S = currentAP2S.filter(function(deadline) {
+        return deadline > Date.now();
+        });
+
+        //Add new actions
+        for(var i = 0; i < buttons.length; i++) {
+        //Just pressed it
+        if(!buttons[i].pressed && newButtons[i].pressed) {
+        if(i === upButtonIdx || i === downButtonIdx || i === leftButtonIdx || i === rightButtonIdx) {
+        //This is sligtly lowered, because very easily spammable
+        currentAP2S.push(currentTime + 1600);
+        } else if(buttonIdx.indexOf(i) >= 0) {
+        currentAP2S.push(currentTime + 2000);
+        }
+        }
+        }
+
+        if(currentAP2S.length >= AP2SThreshold) {
+        AP2S.style.opacity = 1;
+        if(AP2STimer) {
+        clearTimeout(AP2STimer);
+        AP2STimer = null;
+        }
+        } else {
+        if(!AP2STimer) {
+        AP2STimer = setTimeout(function() {
+        AP2S.style.opacity = 0;
+        }, AP2STimeout);
+        }
+        }
+
+        }
+
+        function selectSmokeState() {
+        if(buttons[smokeButtonIdx].pressed) {
+        Smoke.style.opacity = 1;
+        if(SmokeTimer) {
+        clearTimeout(SmokeTimer);
+        SmokeTimer = null;
+        }
+        } else {
+        if(!SmokeTimer) {
+        SmokeTimer = setTimeout(function() {
+        Smoke.style.opacity = 0;
+        }, SmokeTimeout);
+        }
+        }
+        }
+
+        function adjustRPCurve() {
+        if(!currentRPCurve) {
+        currentRPCurve = currentRPCurveTarget;
+        return;
+        }
+
+        for(var i = 0; i < currentRPCurve.length; i++) {
+        currentRPCurve[i] = currentRPCurve[i] + (currentRPCurveTarget[i] - currentRPCurve[i]) * RPSpeed;
+        }
+        }
+
+        function adjustLPCurve() {
+        if(!currentLPCurve) {
+        currentLPCurve = currentLPCurveTarget;
+        return;
+        }
+
+        for(var i = 0; i < currentLPCurve.length; i++) {
+        currentLPCurve[i] = currentLPCurve[i] + (currentLPCurveTarget[i] - currentLPCurve[i]) * LPSpeed;
+        }
+        }
+
+        function getStickDirection() {
+        var upPressed = buttons[upButtonIdx].pressed;
+        var downPressed = buttons[downButtonIdx].pressed;
+        var leftPressed = buttons[leftButtonIdx].pressed;
+        var rightPressed = buttons[rightButtonIdx].pressed;
+
+        if(upPressed && leftPressed) {
+        return STICK_UP_LEFT;
+        } else if(upPressed && rightPressed) {
+        return STICK_UP_RIGHT;
+        } else if(downPressed && leftPressed) {
+        return STICK_DOWN_LEFT;
+        } else if(downPressed && rightPressed) {
+        return STICK_DOWN_RIGHT;
+        } else if(upPressed) {
+        return STICK_UP;
+        } else if(downPressed) {
+        return STICK_DOWN;
+        } else if(leftPressed) {
+        return STICK_LEFT;
+        } else if(rightPressed) {
+        return STICK_RIGHT;
+        } else {
+        return STICK_NEUTRAL;
+        }
+        }
+
+        function selectStickState() {
+        for(var i = 0; i < StickElements.length; i++) {
+        StickElements[i].style.display = (i == direction ? "block" : "none");
+        }
+        }
+
+        function selectButtonsState() {
+        for(var i = 0; i < ButtonElements.length; i++) {
+        var pressed = buttons[buttonIdx[i]].pressed;
+        ButtonElements[i].style.display = (pressed ? "block" : "none");
+        }
+        }
+
+        function selectRPTarget() {
+        var countPressed = 0;
+        var arraySum = [0,0, 0,0, 0,0];
+
+        //Sum bezier curves
+        for(var j = 0; j < ButtonElements.length; j++) {
+        if(buttons[buttonIdx[j]].pressed) {
+        for(var i = 0; i < arraySum.length; i++) {
+        arraySum[i] += pawCurvesButtons[j][i];
+        }
+        countPressed++;
+        }
+        }
+
+        //Average values and set minimum hold timer
+        if(countPressed > 0) {
+        for(var i = 0; i < arraySum.length; i++) {
+        arraySum[i] = Math.floor(arraySum[i] / countPressed);
+        }
+        currentRPCurveTarget = arraySum;
+        if(RPReleaseTimer) {
+        clearTimeout(RPReleaseTimer);
+        RPReleaseTimer = null;
+        }
+        } else {
+        if(!RPReleaseTimer) {
+        RPReleaseTimer = setTimeout(function() {
+        currentRPCurve = null;
+        currentRPCurveTarget = null;
+        }, RPReleaseTimeout);
+        }
+        }
+        }
+
+        function selectLPTarget() {
+        var countPressed = 0;
+        var arraySum = [0,0, 0,0, 0,0];
+
+        //Sum bezier curves
+        if(direction != STICK_NEUTRAL) {
+        for(var i = 0; i < arraySum.length; i++) {
+        arraySum[i] += pawCurvesStick[direction][i];
+        }
+        countPressed++;
+        }
+
+        if(countPressed === 0) {
+        if(!LPReleaseTimer) {
+        if(currentLPCurveTarget) {
+        currentLPCurveTarget = pawCurvesStick[STICK_NEUTRAL]; //Set to Neutral
+        }
+        LPReleaseTimer = setTimeout(function() {
+        currentLPCurve = null;
+        currentLPCurveTarget = null;
+        }, LPReleaseTimeout);
+        }
+        } else {
+        //Average values, possible 2
+        for(var i = 0; i < arraySum.length; i++) {
+        arraySum[i] = Math.floor(arraySum[i] / countPressed);
+        }
+        currentLPCurveTarget = arraySum;
+        if(LPReleaseTimer) {
+        clearTimeout(LPReleaseTimer);
+        LPReleaseTimer = null;
+        }
+        }
+        }
+
+        function drawRPD(curve) {
+        if(!curve) {
+        //Draw hand up
+        rpu.style.display = "block";
+        rpd.style.display = "none";
+        return;
+        }
+
+        rpu.style.display = "none";
+        rpd.style.display = "block";
+
+        rpdctx.clearRect(0, 0, rpdctx.canvas.width, rpdctx.canvas.height);
+        rpdctx.lineWidth = 6;
+        rpdctx.fillStyle = "white";
+        rpdctx.lineCap = "round";
+        rpdctx.beginPath();
+        rpdctx.moveTo(177, 104);
+        rpdctx.bezierCurveTo(curve[0], curve[1], curve[2], curve[3], curve[4], curve[5]);
+
+        rpdctx.fill();
+        rpdctx.stroke();
+        }
+
+        function drawLPD(curve) {
+        if(!curve) {
+        //Draw hand up
+        lpu.style.display = "block";
+        lpd.style.display = "none";
+        return;
+        }
+        lpu.style.display = "none";
+        lpd.style.display = "block";
+
+        lpdctx.clearRect(0, 0, lpdctx.canvas.width, lpdctx.canvas.height);
+        lpdctx.lineWidth = 6;
+        lpdctx.fillStyle = "white";
+        lpdctx.lineCap = "round";
+        lpdctx.beginPath();
+        lpdctx.moveTo(360,200);
+        lpdctx.bezierCurveTo(curve[0], curve[1], curve[2], curve[3], curve[4], curve[5]);
+
+        lpdctx.fill();
+        lpdctx.stroke();
+        }
+
+
+    </script>
+</body>
+</html>
