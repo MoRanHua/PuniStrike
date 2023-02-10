@@ -259,7 +259,8 @@
 
         addEventListener("keydown", function (event) {
             console.log(event.keyCode);
-            current_left_hand_curve = pawCurvesButtons[Math.random()];
+            console.log(pawCurvesButtons.length)
+            current_left_hand_curve = pawCurvesButtons[Math.ceil(5*Math.random())];
             console.log(current_left_hand_curve);
             if (event.keyCode == 65) { draw_left_hand_down(current_left_hand_curve) }
             if (event.keyCode == 83) { draw_right_hand_down(current_right_hand_curve) }
