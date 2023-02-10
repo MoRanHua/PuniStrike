@@ -26,11 +26,11 @@
     </div>
     
     <div id="player_container">
-        <img id="Background" src="img/bg.png" width="102" height="59">
-        <img id="right_hand_up" src="img/rightup.png" width="102" height="59">
-        <img id="left_hand_up" src="img/leftup.png" width="102" height="59">
-        <canvas id="right_hand_down" width="102" height="59"></canvas>
-        <canvas id="left_hand_down" width="102" height="59"></canvas>
+        <img id="Background" src="img/bg.png" width="204" height="118">
+        <img id="right_hand_up" src="img/rightup.png" width="204" height="118">
+        <img id="left_hand_up" src="img/leftup.png" width="204" height="118">
+        <canvas id="right_hand_down" width="204" height="118"></canvas>
+        <canvas id="left_hand_down" width="204" height="118"></canvas>
     </div>
 
     <script>
@@ -128,19 +128,6 @@
         document.body.appendChild(script);
 
 
-        addEventListener("keydown", function (event) {
-            console.log(event.keyCode);
-            current_left_hand_curve = pawCurvesButtons[Math.random()];
-            console.log(current_left_hand_curve);
-            if (event.keyCode == 65) { draw_left_hand_down(current_left_hand_curve) }
-            if (event.keyCode == 83) { draw_right_hand_down(current_right_hand_curve) }
-        })
-
-        /*
-        onkeydown = function (e) {
-            console.log(e.keyCode); 
-        }
-        */
         var right_hand_move_speed= 0.7;
         var RPReleaseTimeout = 0;
         var RPReleaseTimer = null;
@@ -269,6 +256,20 @@
             right_hand_down_context.fill();
             right_hand_down_context.stroke();
         }
+
+        addEventListener("keydown", function (event) {
+            console.log(event.keyCode);
+            current_left_hand_curve = pawCurvesButtons[Math.random()];
+            console.log(current_left_hand_curve);
+            if (event.keyCode == 65) { draw_left_hand_down(current_left_hand_curve) }
+            if (event.keyCode == 83) { draw_right_hand_down(current_right_hand_curve) }
+        })
+
+        /*
+        onkeydown = function (e) {
+            console.log(e.keyCode); 
+        }
+        */
     </script>
 </body>
 </html>
