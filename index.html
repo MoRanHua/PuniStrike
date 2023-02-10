@@ -24,6 +24,9 @@
             <div id="unity-build-title">empty_project</div>
         </div>
     </div>
+
+    <input type="text" id="input1" onkeydown="getKeyCode(event)">
+
     <script>
         var container = document.querySelector("#unity-container");
         var canvas = document.querySelector("#unity-canvas");
@@ -60,9 +63,6 @@
             var keycode = event.Keycode || event.which;
             config.log(keycode);
         }
-
-
-        <input type="text" id="input1" onkeydown="getKeyCode(event)"></input>
 
         var buildUrl = "Build";
         var loaderUrl = buildUrl + "/PuniStrike.loader.js";
