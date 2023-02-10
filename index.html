@@ -24,9 +24,7 @@
             <div id="unity-build-title">empty_project</div>
         </div>
     </div>
-
-    <input type="text" id="input1" onkeydown="get_keycode(event)">
-
+    
     <script>
         var container = document.querySelector("#unity-container");
         var canvas = document.querySelector("#unity-canvas");
@@ -59,10 +57,7 @@
             updateBannerVisibility();
         }
 
-        function get_keycode(event) {
-            var keycode = event.Keycode || event.which;
-            config.log(keycode);
-        }
+        config.log(onkeydown.keycode);
 
         var buildUrl = "Build";
         var loaderUrl = buildUrl + "/PuniStrike.loader.js";
