@@ -166,6 +166,50 @@
             [original_height + 90, original_height + 190, original_height + 50, original_height + 260, original_height + 220, original_height + 160],
         ];
 
+        function set_left_hand_curve_target() {
+            var countPressed = 0;
+            var arraySum = [0, 0, 0, 0, 0, 0];
+
+            //Sum bezier curves
+                
+                    for (var i = 0; i < arraySum.length; i++) {
+                        arraySum[i] += pawCurvesButtons[Math.ceil(5 * Math.random())][i];
+                    
+                    countPressed++;
+                
+            }
+
+            //Average values and set minimum hold timer
+            if (countPressed > 0) {
+                for (var i = 0; i < arraySum.length; i++) {
+                    arraySum[i] = Math.floor(arraySum[i] / countPressed);
+                }
+                current_left_hand_curve_target = arraySum;
+            } 
+        }
+
+        function set_right_hand_curve_target() {
+            var countPressed = 0;
+            var arraySum = [0, 0, 0, 0, 0, 0];
+
+            //Sum bezier curves
+
+            for (var i = 0; i < arraySum.length; i++) {
+                arraySum[i] += pawCurvesButtons[Math.ceil(5 * Math.random())][i];
+
+                countPressed++;
+
+            }
+
+            //Average values and set minimum hold timer
+            if (countPressed > 0) {
+                for (var i = 0; i < arraySum.length; i++) {
+                    arraySum[i] = Math.floor(arraySum[i] / countPressed);
+                }
+                current_right_hand_curve_target = arraySum;
+            }
+        }
+
         function set_left_hand_curve() {
             if (!current_left_hand_curve) {
                 current_left_hand_curve = current_left_hand_curve_target;
@@ -187,45 +231,12 @@
                 current_right_hand_curve[i] = current_right_hand_curve[i] + (current_right_hand_curve_target[i] - current_right_hand_curve[i]) * right_hand_move_speed;
             }
         }
-        function set_left_hand_curve_target() {
-            var countPressed = 0;
-            var arraySum = [0, 0, 0, 0, 0, 0];
-
-            //Sum bezier curves
-            for (var j = 0; j < ButtonElements.length; j++) {
-                if (buttons[buttonIdx[j]].pressed) {
-                    for (var i = 0; i < arraySum.length; i++) {
-                        arraySum[i] += pawCurvesButtons[j][i];
-                    }
-                    countPressed++;
-                }
-            }
-
-            //Average values and set minimum hold timer
-            if (countPressed > 0) {
-                for (var i = 0; i < arraySum.length; i++) {
-                    arraySum[i] = Math.floor(arraySum[i] / countPressed);
-                }
-                currentRPCurveTarget = arraySum;
-                if (RPReleaseTimer) {
-                    clearTimeout(RPReleaseTimer);
-                    RPReleaseTimer = null;
-                }
-            } else {
-                if (!RPReleaseTimer) {
-                    RPReleaseTimer = setTimeout(function () {
-                        currentRPCurve = null;
-                        currentRPCurveTarget = null;
-                    }, RPReleaseTimeout);
-                }
-            }
-        }
 
         function draw_left_hand_down(curve) {
             if (!curve) {
                 //Draw hand up
-                left_hand_down.style.display = "block";
-                left_hand_up.style.display = "none";
+                left_hand_up.style.display = "block";
+                left_hand_down.style.display = "none";
                 return;
             }
             left_hand_up.style.display = "none";
@@ -236,7 +247,7 @@
             left_hand_down_context.fillStyle = "white";
             left_hand_down_context.lineCap = "round";
             left_hand_down_context.beginPath();
-            left_hand_down_context.moveTo(0.85 * right_hand_down_context.canvas.width, 0.75 * right_hand_down_context.canvas.height);
+            left_hand_down_context.moveTo(0.85 * left_hand_down_context.canvas.width, 0.75 * left_hand_down_context.canvas.height);
             left_hand_down_context.bezierCurveTo(curve[0], curve[1], curve[2], curve[3], curve[4], curve[5]);
 
             left_hand_down_context.fill();
@@ -246,8 +257,8 @@
         function draw_right_hand_down(curve) {
             if (!curve) {
                 //Draw hand up
-                right_hand_down.style.display = "block";
-                right_hand_up.style.display = "none";
+                right_hand_up.style.display = "block";
+                right_hand_down.style.display = "none";
                 return;
             }
             right_hand_up.style.display = "none";
@@ -267,8 +278,10 @@
 
         addEventListener("keydown", function (event) {
             console.log(event.keyCode);
-            current_left_hand_curve = pawCurvesButtons[Math.ceil(5 * Math.random())];
-            current_right_hand_curve = pawCurvesButtons[Math.ceil(5 * Math.random())];
+            set_left_hand_curve_target();
+            set_right_hand_curve_target();
+            set_left_hand_curve();
+            set_right_hand_curve();
             console.log(current_left_hand_curve);
             console.log(current_right_hand_curve);
             if (event.keyCode == 65) { draw_left_hand_down(current_left_hand_curve) }
