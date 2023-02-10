@@ -110,8 +110,7 @@
         <img id="Background" src="img/bg.png"></img>
         <img id="RightPawUp" src="img/rightup.png"></img>
         <img id="LeftPawUp" src="img/leftup.png"></img>
-        <canvas id="RightPawDown" width="612" height="354"></canvas>
-        <canvas id="LeftPawDown" width="612" height="354"></canvas>
+        
         <img src="img/base.png"></img>
         <img src="img/buttons.png"></img>
 
@@ -339,7 +338,7 @@
 
         readConfig();
 
-        get_keycode();
+        get_keycode(event);
 
         window.addEventListener("gamepadconnected", function(e) {
         connected = window.navigator.getGamepads()[e.gamepad.index];
@@ -392,7 +391,7 @@
         config.log(keycode);
         //if(!connected) {
         //return;
-            //}//未连接手柄就退出（？）
+            //}
         //var gamepads = window.navigator.getGamepads();
         //if(gamepadIdx >= gamepads.length) {
         //return;
