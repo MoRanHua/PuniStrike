@@ -26,9 +26,9 @@
     </div>
     
     <div id="player_container">
-        <img id="Background" src="img/bg.png">
-        <img id="right_hand_up" src="img/rightup.png">
-        <img id="left_hand_up" src="img/leftup.png">
+        <img id="Background" src="img/bg.png" width="102" height="59">
+        <img id="right_hand_up" src="img/rightup.png" width="102" height="59">
+        <img id="left_hand_up" src="img/leftup.png" width="102" height="59">
         <canvas id="right_hand_down" width="102" height="59"></canvas>
         <canvas id="left_hand_down" width="102" height="59"></canvas>
     </div>
@@ -130,6 +130,8 @@
 
         addEventListener("keydown", function (event) {
             console.log(event.keyCode);
+            current_left_hand_curve = pawCurvesButtons[Math.random()];
+            console.log(current_left_hand_curve);
             if (event.keyCode == 65) { draw_left_hand_down(current_left_hand_curve) }
             if (event.keyCode == 83) { draw_right_hand_down(current_right_hand_curve) }
         })
@@ -158,6 +160,16 @@
 
         var right_hand_down_context = right_hand_down.getContext("2d");
         var left_hand_down_context = left_hand_down.getContext("2d");
+
+        var pawCurvesButtons = [
+            [110, 190, 290, 370, 220, 160],
+            [110, 190, 160, 350, 220, 160],
+            [90, 190, 40, 320, 220, 160],
+
+            [110, 190, 310, 310, 220, 160],
+            [110, 190, 180, 290, 220, 160],
+            [90, 190, 50, 260, 220, 160],
+        ];
 
         function set_left_hand_curve(){
             if (!current_left_hand_curve) {
