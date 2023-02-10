@@ -27,8 +27,10 @@
     
     <div id="player_container">
         <img id="Background" src="img/bg.png" width="204" height="118">
+        <div id=" hand_position">
             <img id="right_hand_up" src="img/rightup.png" width="204" height="118">
             <img id="left_hand_up" src="img/leftup.png" width="204" height="118">
+        </div>
         <canvas id="right_hand_down" width="204" height="118"></canvas>
         <canvas id="left_hand_down" width="204" height="118"></canvas>
     </div>
@@ -127,7 +129,7 @@
         };
         document.body.appendChild(script);
 
-
+        //////////////////////////////////////////////////////////////////////////////////////////////
         var right_hand_move_speed= 0.7;
         var RPReleaseTimeout = 0;
         var RPReleaseTimer = null;
@@ -260,8 +262,7 @@
         addEventListener("keydown", function (event) {
             console.log(event.keyCode);
             current_left_hand_curve = pawCurvesButtons[Math.ceil(5*Math.random())];
-            console.log(current_left_hand_curve);
-            console.log(right_hand_down_context.canvas.height);
+            console.log(1080-current_left_hand_curve);
             if (event.keyCode == 65) { draw_left_hand_down(current_left_hand_curve) }
             if (event.keyCode == 83) { draw_right_hand_down(current_right_hand_curve) }
         })
