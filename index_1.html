@@ -378,12 +378,6 @@
         AP2SThreshold = Number.parseInt(ap2sMatch[1]);
         }
         }
-
-        //获取键盘输入
-        function get_keycode(event) {
-            var keycode = event.Keycode || event.which;
-            config.log(keycode);
-        }
         //
         function pollGamepadButtons() {
         requestAnimationFrame(pollGamepadButtons);

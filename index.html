@@ -25,6 +25,14 @@
         </div>
     </div>
     
+    <div id="player_container">
+        <img id="Background" src="img/bg.png">
+        <img id="RightPawUp" src="img/rightup.png">
+        <img id="LeftPawUp" src="img/leftup.png">
+        <canvas id="RightPawDown" width="306" height="177"></canvas>
+        <canvas id="LeftPawDown" width="306" height="177"></canvas>
+    </div>
+
     <script>
         var container = document.querySelector("#unity-container");
         var canvas = document.querySelector("#unity-canvas");
@@ -59,7 +67,9 @@
 
         addEventListener("keydown", function(event)
         {
-            console.log(event.keyCode); 
+            console.log(event.keyCode);
+            if (event.keyCode == 65) { }
+            if (event.keyCode == 83) { }
         })
 
         /*
