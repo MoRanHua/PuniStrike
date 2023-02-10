@@ -24,17 +24,18 @@
             <div id="unity-build-title">empty_project</div>
         </div>
     </div>
-    
+
     <div id="player_container">
         <img id="Background" src="img/bg.png" width="204" height="118">
-        <div id="hand_position">
-            <img id="right_hand_up" src="img/rightup.png" width="204" height="118">
-            <img id="left_hand_up" src="img/leftup.png" width="204" height="118">
-        </div>
-        <canvas id="right_hand_down" width="204" height="118"></canvas>
-        <canvas id="left_hand_down" width="204" height="118"></canvas>
     </div>
-    
+
+    <div id="hand_position">
+        <img id="right_hand_up" src="img/rightup.png" width="204" height="118">
+        <img id="left_hand_up" src="img/leftup.png" width="204" height="118">
+    <canvas id="right_hand_down" width="204" height="118"></canvas>
+    <canvas id="left_hand_down" width="204" height="118"></canvas>
+    </div>
+
     <script>
         var container = document.querySelector("#unity-container");
         var canvas = document.querySelector("#unity-canvas");
@@ -130,7 +131,7 @@
         document.body.appendChild(script);
 
         //////////////////////////////////////////////////////////////////////////////////////////////
-        var right_hand_move_speed= 0.7;
+        var right_hand_move_speed = 0.7;
         var RPReleaseTimeout = 0;
         var RPReleaseTimer = null;
         var current_right_hand_curve = null;
@@ -144,7 +145,7 @@
 
         var right_hand_up = document.getElementById("right_hand_up");
         var left_hand_up = document.getElementById("left_hand_up");
-        var right_hand_down= document.getElementById("right_hand_down");
+        var right_hand_down = document.getElementById("right_hand_down");
         var left_hand_down = document.getElementById("left_hand_down");
 
         var right_hand_down_context = right_hand_down.getContext("2d");
@@ -160,7 +161,7 @@
             [90, 190, 50, 260, 220, 160],
         ];
 
-        function set_left_hand_curve(){
+        function set_left_hand_curve() {
             if (!current_left_hand_curve) {
                 current_left_hand_curve = current_left_hand_curve_target;
                 return;
@@ -270,7 +271,7 @@
 
         /*
         onkeydown = function (e) {
-            console.log(e.keyCode); 
+            console.log(e.keyCode);
         }
         */
     </script>
