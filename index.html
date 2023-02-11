@@ -30,13 +30,13 @@
     </div>
 
     <div id="left_hand_position">
-        <img id="left_hand_up" src="img/leftup.png" width="204" height="118">
-        <img id="left_hand_down" src="img/hand/0.png" width="204" height="118">
+        <img id="left_hand_up" src="img/leftup.png" width="204" height="118" style="position: absolute; z-index: 2; left: 85%; top: 75%">
+        <img id="left_hand_down" src="img/hand/0.png" width="204" height="118" style="position: absolute; z-index: 2; left: 85%; top: 75%">
     </div>
 
     <div id="right_hand_position">
-        <img id="right_hand_up" src="img/rightup.png" width="204" height="118">
-        <img id="right_hand_down" src="img/hand/10.png" width="204" height="118">
+        <img id="right_hand_up" src="img/rightup.png" width="204" height="118" style="position: absolute; z-index: 2; left: 85%; top: 75%">
+        <img id="right_hand_down" src="img/hand/10.png" width="204" height="118" style="position: absolute; z-index: 2; left: 85%; top: 75%">
     </div>
 
     <script>
@@ -142,6 +142,9 @@
         var right_hand_down_context = right_hand_down.getContext("2d");
         var left_hand_down_context = left_hand_down.getContext("2d");
 
+        left_hand_down.style.display = "none";
+        right_hand_down.style.display = "none";
+
         var original_height = 0.75 * right_hand_down_context.canvas.height;
 
         var pawCurvesButtons = [
@@ -181,7 +184,7 @@
             if (keydown_event.keyCode == 83) { draw_right_hand_down() }
         })
 
-        addEventListener("keyup", function (keyup_event)){
+        addEventListener("keyup", function (keyup_event){
             console.log(keyup_event.keyCode);
             if (keyup_event.keyCode == 65) { draw_left_hand_up() }
             if (keyup_event.keyCode == 83) { draw_right_hand_up() }
