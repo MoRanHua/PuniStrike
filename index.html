@@ -26,7 +26,7 @@
     </div>
 
     <div id="player_container">
-        <img id="Background" src="img/cat.png" width="204" height="118">
+        <img id="Background" src="img/cat.png" width="204" height="118" style="position: absolute; z-index:1; left : 85%; top: 75%">
     </div>
 
     <div id="left_hand_position">
@@ -133,7 +133,14 @@
         };
         document.body.appendChild(script);
 
-        //////////////////////////////////////////////////////////////////////////////////////////////
+        //传递参数相关
+        var keycode_list = [65, 83, 68, 70, 72, 74, 75, 76]
+
+        function update_keycode(keycode_to_change,keycode_num) {
+            keycode_list[keycode_to_change] = keycode_num;
+        }
+
+        //驱动动画相关
         var right_hand_up = document.getElementById("right_hand_up");
         var left_hand_up = document.getElementById("left_hand_up");
         var right_hand_down = document.getElementById("right_hand_down");
@@ -161,14 +168,14 @@
 
         addEventListener("keydown", function (keydown_event) {
             console.log(keydown_event.keyCode);
-            if (keydown_event.keyCode == 65) { draw_left_hand_down(); }
-            if (keydown_event.keyCode == 83) { draw_right_hand_down(); }
+            if (keydown_event.keyCode == keycode_list[0] || keydown_event.keyCode == keycode_list[1] || keydown_event.keyCode == keycode_list[2] || keydown_event.keyCode == keycode_list[3]) { draw_left_hand_down(); }
+            if (keydown_event.keyCode == keycode_list[4] || keydown_event.keyCode == keycode_list[5] || keydown_event.keyCode == keycode_list[6] || keydown_event.keyCode == keycode_list[7]) { draw_right_hand_down(); }
         })
 
         addEventListener("keyup", function (keyup_event){
             console.log(keyup_event.keyCode);
-            if (keyup_event.keyCode == 65) { draw_left_hand_up(); }
-            if (keyup_event.keyCode == 83) { draw_right_hand_up(); }
+            if (keydown_event.keyCode == keycode_list[0] || keydown_event.keyCode == keycode_list[1] || keydown_event.keyCode == keycode_list[2] || keydown_event.keyCode == keycode_list[3]) { draw_left_hand_up(); }
+            if (keydown_event.keyCode == keycode_list[4] || keydown_event.keyCode == keycode_list[5] || keydown_event.keyCode == keycode_list[6] || keydown_event.keyCode == keycode_list[7]) { draw_right_hand_up(); }
         })
 
         /*
