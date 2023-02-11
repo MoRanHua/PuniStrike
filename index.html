@@ -174,8 +174,8 @@
 
         addEventListener("keyup", function (keyup_event){
             console.log(keyup_event.keyCode);
-            if (keydown_event.keyCode == keycode_list[0] || keydown_event.keyCode == keycode_list[1] || keydown_event.keyCode == keycode_list[2] || keydown_event.keyCode == keycode_list[3]) { draw_left_hand_up(); }
-            if (keydown_event.keyCode == keycode_list[4] || keydown_event.keyCode == keycode_list[5] || keydown_event.keyCode == keycode_list[6] || keydown_event.keyCode == keycode_list[7]) { draw_right_hand_up(); }
+            if (keyup_event.keyCode == keycode_list[0] || keyup_event.keyCode == keycode_list[1] || keyup_event.keyCode == keycode_list[2] || keyup_event.keyCode == keycode_list[3]) { draw_left_hand_up(); }
+            if (keyup_event.keyCode == keycode_list[4] || keyup_event.keyCode == keycode_list[5] || keyup_event.keyCode == keycode_list[6] || keyup_event.keyCode == keycode_list[7]) { draw_right_hand_up(); }
         })
 
         /*
